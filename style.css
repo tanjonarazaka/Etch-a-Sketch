@@ -1,0 +1,44 @@
+.outer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.control { 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.control button {
+    font-size: 20px;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(15, 149, 246);
+    cursor: pointer;
+}
+
+.control button:hover {
+    background-color: rgb(7, 111, 185);
+}
+
+.control button:active {
+    background-color: rgb(4, 85, 142);
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid black;   
+    width: 960px;
+    height: 960px;
+}
+
+.container div {
+    box-sizing: border-box;
+    border: 1px solid rgb(166, 166, 166);
+}
