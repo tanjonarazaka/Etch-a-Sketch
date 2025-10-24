@@ -1,41 +1,69 @@
+const DEFAULT_COLOR = "black";
+const DEFAULT_NUM_OF_SQUARE = 16;
 const div = document.querySelector(".container");
-const btn = document.querySelector("button");
+const newBtn = document.querySelector(".newBtn");
+const rainbowBtn = document.querySelector(".rainbowBtn");
+const colorBtn = document.querySelector(".colorBtn");
+const clearBtn = document.querySelector(".clearBtn");
 
 let squareDivs;
+let color = DEFAULT_COLOR;
+let numOfSquare = DEFAULT_NUM_OF_SQUARE;
 
-createGrid(16);
+
+createGrid(numOfSquare);
 
 // --- Event listeners ---
-btn.addEventListener("click", () => {
-    
-    let numSquare = getNumSquare();
+newBtn.addEventListener("click", () => {
+
+    numOfSquare = getNumSquare();
 
     deleteGrid(squareDivs);
-    createGrid(numSquare);
-})
+    createGrid(numOfSquare);
+});
+
+rainbowBtn.addEventListener("click", () => {
+    color = "rainbow";
+});
+
+colorBtn.addEventListener("click", () => {
+    color = "black";
+});
+
+clearBtn.addEventListener("click", () => {
+    deleteGrid(squareDivs);
+    createGrid(numOfSquare);
+});
+
 
 // --- Helper functions ---
-function createGrid(num) {
-    let dimension = 960 / num; // dimension for each square
-    num *= num;
 
-    console.log(dimension);
-    
+function setColor(e) {
+    if(color === "rainbow") {
+        e.target.style.backgroundColor = "rgb(" + randomColor() +
+            ", " + randomColor() + ", " + randomColor() + ")";
+    }
 
-    for(let i = 0; i < num; i++) {
+    else if(color === "black") {
+        e.target.style.backgroundColor = color;
+    } 
+}
+
+function createGrid(numOfSquare) {
+    let dimension = 800 / numOfSquare; // dimension for each square
+    numOfSquare *= numOfSquare;
+
+    for (let i = 0; i < numOfSquare; i++) {
         div.appendChild(document.createElement("div"));
     }
 
-    
     squareDivs = document.querySelectorAll(".container div");
 
     squareDivs.forEach((squareDiv) => {
-        squareDiv.addEventListener("mouseover", () => {
-            squareDiv.style.backgroundColor = "purple";
-        });
-        
         squareDiv.style.width = `${dimension}px`;
         squareDiv.style.height = `${dimension}px`;
+
+        squareDiv.addEventListener("mouseover", setColor);
     });
 }
 
@@ -46,11 +74,16 @@ function deleteGrid(elements) {
 }
 
 function getNumSquare() {
-    let numSquare;
+    let num;
 
     do {
-        numSquare = prompt("Enter the number of squares per side (1 - 100)");
-    } while (!(numSquare >= 1 && numSquare <= 100));
+        num = prompt("Enter the number of squares per side (integers from 1 - 100)");
+        num = Math.floor(num);
+    } while (!(num >= 1 && num <= 100));
 
-    return numSquare;
+    return num;
+}
+
+function randomColor() {
+    return Math.floor(Math.random() * 256);
 }
